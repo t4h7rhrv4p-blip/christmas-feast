@@ -10,7 +10,7 @@ window.KALENDER = {
   // Mit ?datum=2026-12-05 in der URL wird stattdessen dieses Datum simuliert,
   // ?reset setzt die geöffneten Türchen zurück.
   // Vor dem 1. Dezember auf false stellen!
-  testModus: true,
+  testModus: false,
 
   tuerchen: [
     { tag: 1,  bild: "bilder/01_oyster.jpg", titel: "2 Austern", text: "Let's eat them while they're fresh!" },
