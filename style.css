@@ -1,0 +1,271 @@
+/* ===== Design-Tokens: hier Farben, Rundungen, Abstände anpassen ===== */
+:root {
+  --bg: #1E4D3A;
+  --surface: #fff;
+  --text: #1B1B1F;
+  --akzent: #EFF2EF; 
+
+  /* Kartenfarben, werden der Reihe nach vergeben */
+  --c1: #F3DDB0;
+  --c2: #C9BCEB;
+  --c3: #BBDDF0;
+  --c4: #8EE0A6;
+  --c5: #F7C6C7;
+  --c6: #FFE58A;
+
+  --radius: 18px;
+  --gap: 10px;
+  --pad: 14px;
+  --font-titel: "Outfit", var(--font);
+  --font: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html {
+  height: 100%;
+  scroll-snap-type: y mandatory;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Bildschirme ===== */
+.screen {
+  height: 100vh;
+  height: 100dvh;
+  max-width: 1100px;
+  margin: 0 auto;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  padding:
+    calc(var(--pad) + env(safe-area-inset-top))
+    calc(var(--pad) + env(safe-area-inset-right))
+    calc(var(--pad) + env(safe-area-inset-bottom))
+    calc(var(--pad) + env(safe-area-inset-left));
+}
+
+.hero {
+  text-align: center;
+  padding: 8px 8px 16px;
+  color: var(--akzent);
+}
+.hero h1 {
+  font-family: var(--font-titel);
+  font-size: clamp(32px, 8vw, 56px);
+  font-weight: 300;
+  letter-spacing: 0.01em;
+}
+.hero p { margin-top: 6px; font-size: clamp(14px, 3.6vw, 18px); }
+
+/* ===== Raster: Handy (2 Spalten) ===== */
+.grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 1fr;
+}
+.layout-4a { grid-template-areas: "a b" "c d"; }
+.layout-4b { grid-template-areas: "a a" "b c" "b d"; }
+.layout-3a { grid-template-areas: "a b" "c c"; }
+.layout-3b { grid-template-areas: "a a" "b c"; }
+.layout-5a { grid-template-areas: "a b" "c c" "d e"; }
+.layout-5b { grid-template-areas: "a b" "a c" "d e"; }
+
+/* ===== Raster: Tablet (4 Spalten) ===== */
+@media (min-width: 700px) {
+  :root { --gap: 14px; --pad: 22px; --radius: 22px; }
+  .grid { grid-template-columns: repeat(4, 1fr); }
+  .layout-4a { grid-template-areas: "a a b c" "a a d d"; }
+  .layout-4b { grid-template-areas: "a b d d" "c c d d"; }
+  .layout-3a { grid-template-areas: "a a b b" "c c c c"; }
+  .layout-3b { grid-template-areas: "a a a a" "b b c c"; }
+  .layout-5a { grid-template-areas: "a b b c" "a d e c"; }
+  .layout-5b { grid-template-areas: "a a b c" "d e e c"; }
+}
+
+/* ===== Türchen ===== */
+.tuer {
+  position: relative;
+  min-height: 0;
+  perspective: 1400px;
+}
+
+.klappe, .innen {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.klappe {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  background: var(--farbe);
+  transform-origin: left center;
+  transition: transform 0.9s cubic-bezier(.3, .7, .2, 1);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  z-index: 2;
+  container-type: size;
+}
+
+/* Weißes Motiv auf der Klappe, ragt über den Rand hinaus (Anschnitt) */
+.deko {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  /* Größe richtet sich nach Breite und Höhe, damit auch schmale Kacheln genug Motiv zeigen */
+  width: min(110cqw, 88cqh);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) rotate(var(--dreh));
+  color: #fff;
+  pointer-events: none;
+}
+.deko svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.deko svg * { vector-effect: non-scaling-stroke; }
+/* Mittelpunkt des Motivs und Drehung; die Nummer oben links bleibt frei */
+.deko-pos0 { --x: 74%; --y: 78%; --dreh: 12deg; }   /* unten rechts */
+.deko-pos1 { --x: 74%; --y: 58%; --dreh: -8deg; }   /* rechts mittig */
+.deko-pos2 { --x: 28%; --y: 82%; --dreh: -14deg; }  /* unten links */
+.deko-pos3 { --x: 20%; --y: 66%; --dreh: -10deg; }  /* links mittig */
+.deko-pos4 { --x: 52%; --y: 86%; --dreh: 8deg; }    /* unten mittig */
+
+.kopf { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-start; }
+.nummer { font-size: clamp(52px, 9vw, 80px); font-weight: 300; line-height: 1; }
+.pfeil { font-size: 22px; line-height: 1; }
+.vermerk {
+  display: none;
+  width: fit-content;
+  margin-top: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Offene Karte: oben 2/3 Bild, unten 1/3 Titel und Text */
+.innen {
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+  background: var(--surface);
+}
+/* Farbiger Rand über allem, damit er auch am Foto sichtbar ist */
+.innen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 3px var(--farbe);
+  pointer-events: none;
+  z-index: 2;
+}
+.innen-bild {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--farbe);
+}
+/* Nummer an derselben Stelle wie auf der geschlossenen Klappe */
+.innen-bild .nummer { position: absolute; top: 12px; left: 14px; z-index: 1; }
+/* Auf Fotos weiße Nummer, damit sie lesbar bleibt */
+.innen-bild.mit-foto .nummer { color: #fff; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35); }
+.innen .motiv {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(40px, 12vw, 80px);
+}
+/* Foto füllt die obere Fläche randlos aus */
+.innen .motiv img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.innen-unten {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 10px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.innen-titel { color: var(--bg); font-family: var(--font-titel); font-weight: 500; font-size: clamp(16px, 2.6vw, 22px); line-height: 1.25; }
+.innen-text { font-size: clamp(13px, 1.8vw, 16px); line-height: 1.45; }
+
+/* Zustände */
+.tuer.offen .klappe { transform: rotateY(-105deg); pointer-events: none; }
+.tuer.ohne-animation .klappe { transition: none; }
+
+/* Verpasst: leicht entsättigt, aber klar anklickbar */
+.tuer.verpasst .klappe { filter: grayscale(0.5); }
+.tuer.verpasst .vermerk { display: block; }
+.tuer.zu .pfeil { opacity: 0.35; }
+
+.tuer.wackeln .klappe { animation: wackeln 0.4s; }
+
+@keyframes wackeln {
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+/* ===== Hinweis-Toast ===== */
+#toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  transform: translate(-50%, 20px);
+  max-width: calc(100% - 32px);
+  padding: 12px 18px;
+  border-radius: 14px;
+  background: var(--text);
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 10;
+}
+#toast.sichtbar { opacity: 1; transform: translate(-50%, 0); }
+
+.testmodus {
+  position: fixed; top: calc(6px + env(safe-area-inset-top)); right: 8px;
+  background: #000; color: #fff; font-size: 11px;
+  padding: 4px 8px; border-radius: 8px; opacity: 0.7; z-index: 5;
+}
+.testmodus button {
+  border: 0; padding: 0; background: none; color: inherit;
+  font: inherit; text-decoration: underline; cursor: pointer;
+}
+.test-knopf {
+  margin-top: 4px;
+  padding: 8px 14px;
+  border: 1px dashed var(--text);
+  border-radius: 999px;
+  background: none;
+  color: var(--text);
+  font: inherit; font-size: 13px;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .klappe { transition: none; }
+  .tuer.wackeln .klappe { animation: none; }
+}
