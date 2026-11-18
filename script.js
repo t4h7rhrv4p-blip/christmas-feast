@@ -1,6 +1,7 @@
 (() => {
   const K = window.KALENDER;
-  const SPEICHER_KEY = `adventskalender-${K.jahr}-offen`;
+  // Testmodus speichert getrennt, damit Testklicks den echten Stand nicht beeinflussen
+  const SPEICHER_KEY = `adventskalender-${K.jahr}-offen${K.testModus ? "-test" : ""}`;
   const FLAECHEN = "abcde";
   const params = new URLSearchParams(location.search);
 
@@ -51,11 +52,11 @@
   }
 
   function status(tag) {
-    if (offen.has(tag)) return "offen";
-    if (K.testModus && !params.get("datum")) return "oeffenbar";
+    if (K.testModus && !params.get("datum")) return offen.has(tag) ? "offen" : "oeffenbar";
     const t = dezemberTag();
+    if (tag > t) return "zu"; // Zukünftige Tage bleiben zu, auch wenn etwas anderes gespeichert ist
+    if (offen.has(tag)) return "offen";
     if (tag === t) return "oeffenbar";
-    if (tag > t) return "zu";
     return "verpasst"; // vergangen und noch nicht geöffnet: markiert, lässt sich nachholen
   }
 
@@ -177,7 +178,7 @@
     klappe.append(deko(index, lage));
     klappe.addEventListener("click", () => tippen(tuer, eintrag));
 
-    // Offene Karte: oben 2/3 Bild mit Nummer wie auf der Klappe, unten Titel und Text
+    // Offene Karte: oben 60 % Bild mit Nummer wie auf der Klappe, unten Titel und Text
     const innen = document.createElement("div");
     innen.className = "innen";
     const bildflaeche = document.createElement("div");

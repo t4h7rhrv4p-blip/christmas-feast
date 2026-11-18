@@ -162,10 +162,10 @@ body {
   text-transform: uppercase;
 }
 
-/* Offene Karte: oben 2/3 Bild, unten 1/3 Titel und Text */
+/* Offene Karte: oben 60 % Bild, unten 40 % Titel und Text */
 .innen {
   display: grid;
-  grid-template-rows: 2fr 1fr;
+  grid-template-rows: 3fr 2fr;
   background: var(--surface);
 }
 /* Farbiger Rand über allem, damit er auch am Foto sichtbar ist */

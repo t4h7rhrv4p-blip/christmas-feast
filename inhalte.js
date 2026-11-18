@@ -30,7 +30,7 @@ window.KALENDER = {
     { tag: 15, bild: "bilder/15_wald.jpg", titel: "Sehnsucht nach Wald", text: "Tiefenentspannung und Ruhe in der Badewanne" },
     { tag: 16, bild: "bilder/16_nuesse.jpg", titel: "Kuss auf die Nuss", text: "Noch mehr Energie" },
     { tag: 17, bild: "bilder/17_keks.jpg", titel: "Ein Keks", text: "Für gute Laune" },
-    { tag: 18, bild: "bilder/18_tea.jpg", titel: "Tea time", text: "Wärme von innen für die kalten Tage" },
+    { tag: 18, bild: "bilder/18_tea.jpg", titel: "Tea time", text: "Wärme für die kalten Tage" },
     { tag: 19, titel: "gesichtspflege dm", text: "Platzhaltertext für Tag 19." },
     { tag: 20, bild: "bilder/20_sauna.jpg", titel: "Sauna mit mir", text: "Wir lieben die Hitze" },
     { tag: 21, bild: "bilder/21_schoki.jpg", titel: "Ein Stück Schoki", text: "Freude für die Seele" },
